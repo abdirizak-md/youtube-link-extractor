@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const API_KEY = "AIzaSyCYCV5_6ada35WspZonTepCH_ol2Fkgt9Q"; // Replace with your YouTube Data API key
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function YouTubePlaylistExtractor() {
   const [playlistUrl, setPlaylistUrl] = useState("");
@@ -87,11 +87,11 @@ export default function YouTubePlaylistExtractor() {
 
       <main className="flex-grow container mx-auto p-6 max-w-2xl bg-white shadow-lg rounded-lg mt-6">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
-          YouTube Playlist Downloader
+          YouTube Playlist Extractor
         </h2>
         <p className="text-gray-600 text-center mb-6">
-          You're now on the perfect site to download hundreds of YouTube videos at once for free.
-          Copy the playlist link, paste it here, and download all the videos you want with our tool.
+          You're now on the perfect site to extract  hundreds of YouTube playlist  videos link at once for free.
+          Copy the playlist link, paste it here, and extract all the videos link you want with our tool.
         </p>
         <input
           type="text"

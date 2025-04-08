@@ -30,7 +30,7 @@ export default function SignUp({ onAuth, darkMode }) {
       />
       <button
         onClick={handleSignUp}
-        className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded"
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded cursor-pointer"
       >
         Sign Up
       </button>

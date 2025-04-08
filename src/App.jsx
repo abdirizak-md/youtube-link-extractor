@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { FaRegCopy } from 'react-icons/fa'
 import axios from 'axios';
 import { FaSun, FaMoon } from 'react-icons/fa';
 import SignUp from "./components/SignUp";
@@ -12,18 +13,21 @@ export const App = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [copiedIndex, setCopiedIndex] = useState(null);
   const [allCopied, setAllCopied] = useState(false);
-  const [format, setFormat] = useState(false);
+  const [format, setFormat] = useState("mp4");
   const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem("loggedIn") === "true");
   const [authView, setAuthView] = useState("login");
 
   const extractLinks = async () => {
-    const playlistId = playlistUrl.split('list=')[1];
-    const apiKey = import.meta.VITE_API_KEY; 
-    const response = await axios.get(
-      `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${apiKey}`
-    );
-    const links = response.data.items.map(item => `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`);
-    setVideoLinks(links);
+    try {
+      const playlistId = playlistUrl.split('list=')[1];
+      const API_KEY = import.meta.env.VITE_API_KEY;
+      const response = await axios.get(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=50&key=${API_KEY}`);
+      const links = response.data.items.map(item => `https://www.youtube.com/watch?v=${item.snippet.resourceId.videoId}`);
+      setVideoLinks(links);
+    } catch (error) {
+      console.error("Error extracting links:", error);
+      alert("Failed to fetch playlist items. Please check your API key and playlist URL.");
+    }
   };
 
   const copyToClipboard = (link, index) => {
@@ -59,8 +63,8 @@ export const App = () => {
           <div className="flex gap-2 items-center">
                 {!isLoggedIn ? (
                 <>
-                    <button onClick={() => setAuthView("login")} className="cursor-pointer px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition cursor-pointer">Login</button>
-                    <button onClick={() => setAuthView("signup")} className="cursor-pointer px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition cursor-pointer">Sign Up</button>
+                    <button onClick={() => setAuthView("login")} className="cursor-pointer px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition">Login</button>
+                    <button onClick={() => setAuthView("signup")} className="cursor-pointer px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition">Sign Up</button>
                 </>
                 ) : (
                 <Logout onLogout={setIsLoggedIn} />
@@ -120,7 +124,7 @@ export const App = () => {
                     rel="noopener noreferrer"
                     className="text-blue-600 break-all mr-2">{link}</a>
                     <button onClick={() => copyToClipboard(link, index)}
-                    className="flex items-center text-sm underline">{copiedIndex === index ? 'Copied' : 'Copy'}</button>
+                    className="flex items-center text-sm  cursor-pointer">{copiedIndex === index ? 'Copied' : <FaRegCopy/>}</button>
                 </div>
                 ))}
 
@@ -129,9 +133,9 @@ export const App = () => {
         {videoLinks.length > 0 && (
           <button
             onClick={copyAllToClipboard}
-            className="w-full mt-4 bg-green-600 text-white p-2 rounded"
+            className="w-full mt-4 bg-green-600 text-white p-2 rounded cursor-pointer"
           >
-            {copiedIndex ? 'All Copied' : 'Copy All'}
+           {allCopied ? 'All Copied' : 'Copy all'}
           </button>
         )}
 

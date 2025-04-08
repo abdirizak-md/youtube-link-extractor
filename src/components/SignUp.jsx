@@ -16,18 +16,27 @@ export default function SignUp({ onAuth, darkMode }) {
       <h2 className="text-xl font-bold mb-4 text-center">Sign Up</h2>
       <input
         type="email"
+        name="email"
+        autoComplete="email"
         placeholder="Email"
+        pattern="[a-zA-Z0-9._%+-]+@gmail\.com$"
+        title="Only Gmail addresses are allowed"
         className={`w-full p-2 mb-4 rounded border ${darkMode ? "bg-gray-700 border-gray-600 text-white" : "bg-white border-gray-300"}`}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-      />
+        required
+            />
       <input
         type="password"
+        name="password"
+        autoComplete="new-password"
         placeholder="Password"
         className={`w-full p-2 mb-4 rounded border ${darkMode ? "bg-gray-700 border-gray-600 text-white" : "bg-white border-gray-300"}`}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
-      />
+        required
+      />  
+
       <button
         onClick={handleSignUp}
         className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded cursor-pointer"

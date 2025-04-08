@@ -20,19 +20,25 @@ export default function Login({ onLogin, darkMode }) {
       <h2 className="text-xl font-bold mb-4 text-center">Login</h2>
       <input
         type="email"
+        name="email"
+        autoComplete="email"
         placeholder="Email"
         className={`w-full p-2 mb-4 rounded border ${darkMode ? "bg-gray-700 border-gray-600 text-white" : "bg-white border-gray-300"}`}
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
       />
       <input
         type="password"
+        name="password"
+        autoComplete="current-password"
         placeholder="Password"
-        autoComplete="true"
         className={`w-full p-2 mb-4 rounded border ${darkMode ? "bg-gray-700 border-gray-600 text-white" : "bg-white border-gray-300"}`}
         value={password}
         onChange={(e) => setPassword(e.target.value)}
+        required
       />
+
       <button
         onClick={handleLogin}
         className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded cursor-pointer"
